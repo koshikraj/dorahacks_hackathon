@@ -110,6 +110,26 @@ export default class Contract {
         }
     }
 
+    getBountyStatus(repoId, callbackHandler)
+    {
+
+        try {
+            var user_address = this.user_address;
+            this.voting.deployed().then(function(contractInstance) {
+
+                contractInstance.getBountyStatus(repoId, {gas: 1400000, from: user_address}).then(function(c) {
+                    console.log(c.toLocaleString());
+                    callbackHandler(c.toLocaleString());
+                });
+
+
+            });
+        } catch (err) {
+            console.log(err);
+        }
+
+    }
+
 }
 
 module.export = Contract;

@@ -11,6 +11,8 @@
 
    mapping (bytes32 => Contributor[]) public repoContribution;
 
+   mapping (bytes32 => bool) public bounty;
+
      bytes data = "";
 
 
@@ -68,19 +70,36 @@
 
      }
 
-     function crowdFund(bytes32 repoId) payable returns (uint){
+     function crowdFund(bytes32 repoId) payable returns (bytes32){
 
          transfer_contribution(msg.value, repoId);
-         return repoContribution[repoId].length;
+         if (msg.value >= 5 ether)
+         {
+             bounty[repoId] = true;
+         }
+         else
+         {
+             bounty[repoId] = false;
+         }
 
 
+     }
+
+     function getBountyStatus(bytes32 repoId) view public returns (bool)
+     {
+         return bounty[repoId];
+     }
+
+     function resetBountyStatus(bytes32 repoId)
+     {
+         bounty[repoId] = false;
      }
 
    function() payable {
 
        bytes32 repoId = 1123213;
-       transfer_contribution(msg.value, repoId);
 
+       transfer_contribution(msg.value, repoId);
 
 
    }

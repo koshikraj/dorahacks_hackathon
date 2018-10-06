@@ -5,6 +5,7 @@ import './App.css';
 import './css/style.css';
 import Contract from './Contract';
 import chatActive from './active.svg';
+import chatDisabled from './disabled.png';
 import { Chat } from 'react-chat-popup';
 
 let API = 'http://localhost:8888/';
@@ -21,7 +22,8 @@ class Repo extends Component {
                       commits: [],
                       codeType: 'files',
                       donatePop:false,
-                      showChat: false
+                      showChat: false,
+                      chatStatus: false
                   };
 
         this.contract = new Contract();
@@ -29,6 +31,7 @@ class Repo extends Component {
         this.rating = 0;
         this.votes = 0;
         this.callbackHandler = this.callbackHandler.bind(this);
+        this.callbackBountyStatus = this.callbackBountyStatus.bind(this);
 
 
 
@@ -39,6 +42,16 @@ class Repo extends Component {
         console.log(amounts);
         amounts[address] = amount;
         this.setState({amounts: amounts});
+
+    }
+
+    callbackBountyStatus(status){
+
+        this.setState({chatStatus: status ? chatActive : chatDisabled });
+
+
+        console.log('bounty status');
+        console.log(status);
 
     }
 
@@ -60,6 +73,8 @@ class Repo extends Component {
                     this.contract.getUserBalance(response.data[i].address, this.callbackHandler);
                 }
             });
+
+        this.contract.getBountyStatus(this.props.details.id, this.callbackBountyStatus);
     }
 
     listFiles() {
@@ -124,6 +139,19 @@ class Repo extends Component {
 
     }
 
+    imageColor() {
+
+        console.log('image');
+        console.log(this.chatStatus);
+        let status = this.chatStatus;
+        if (status === true){
+            return chatActive;
+    }
+    else if(status === false) {
+            return chatDisabled;
+        }
+    }
+
 
     listContributors(){
 
@@ -148,7 +176,7 @@ class Repo extends Component {
             </div>
             <div className="table--content__column avg">{this.state.contributors[fileI].rating / this.state.contributors[fileI].votes}</div>
             <div className="table--content__column earnings">{Number.parseFloat(this.state.amounts[this.state.contributors[fileI].address]).toFixed(2)} ETH</div>
-            <img src={chatActive} className="chatActive" onClick={()=> {this.openChat()}} /> 
+            <img src={this.state.chatStatus} className="chatActive" onClick={()=> {this.openChat()}} />
         </div>;
 
         contributorsList.push(contributor);
