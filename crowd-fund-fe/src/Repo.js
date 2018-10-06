@@ -4,8 +4,10 @@ import logo from './logo.svg';
 import './App.css';
 import './css/style.css';
 import Contract from './Contract';
+import chatActive from './active.svg';
+import { Chat } from 'react-chat-popup';
 
-let API = 'http://hackathon.koshikraj.com:8888/';
+let API = 'http://localhost:8888/';
 
 class Repo extends Component {
 
@@ -18,7 +20,8 @@ class Repo extends Component {
                       amounts:{},
                       commits: [],
                       codeType: 'files',
-                      donatePop:false
+                      donatePop:false,
+                      showChat: false
                   };
 
         this.contract = new Contract();
@@ -114,6 +117,14 @@ class Repo extends Component {
 
     }
 
+    openChat(){
+        this.setState({
+            showChat: true
+        })
+
+    }
+
+
     listContributors(){
 
         let contributorsList = [];
@@ -137,6 +148,7 @@ class Repo extends Component {
             </div>
             <div className="table--content__column avg">{this.state.contributors[fileI].rating / this.state.contributors[fileI].votes}</div>
             <div className="table--content__column earnings">{Number.parseFloat(this.state.amounts[this.state.contributors[fileI].address]).toFixed(2)} ETH</div>
+            <img src={chatActive} className="chatActive" onClick={()=> {this.openChat()}} /> 
         </div>;
 
         contributorsList.push(contributor);
@@ -169,6 +181,7 @@ class Repo extends Component {
         if (this.state.scene == 'code')
     return (
         <div>
+           
             <header className="header">
                 <nav className="navbar navbar-expand-lg">
                     <div className="container">
@@ -337,6 +350,15 @@ class Repo extends Component {
     );
         else
         return (<div>
+             
+                                {this.state.showChat ?
+                                <div className="App">
+                                    <Chat />
+                                </div>
+                            :
+                            null
+                        }
+            
                 <header className="header">
                     <nav className="navbar navbar-expand-lg">
                         <div className="container">
@@ -388,6 +410,7 @@ class Repo extends Component {
                                         <div className="table--header__column rating">Your Rating</div>
                                         <div className="table--header__column avg">Avg Rating</div>
                                         <div className="table--header__column earnings">Earnings</div>
+                                        <div className="table--header__column chat">Chat</div>
                                     </div>
 
                                     {this.listContributors()}

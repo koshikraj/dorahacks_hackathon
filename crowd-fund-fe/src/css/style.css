@@ -7040,23 +7040,28 @@ table.files td .css-truncate {
   margin-top: 30px; }
 .table--header {
   display: block;
-  width: 100%;
+  width: 110%;
   height: 40px;
   background-color: #f0f0f0;
   border: solid 1px #d1d5db;
   line-height: 40px;
-  text-align: left; }
+  text-align: left; 
+}
+
 .table--header__column {
   margin-left: 5px;
   display: inline-block;
-  width: calc(100%/6 - 1%); }
+  width: calc(100%/7 - 1%); }
 .table--header__column.rank {
   width: 6%; }
 .table--header__column.user {
   width: 24%; }
+.table--header__column.chat {
+  width: 6%;
+}
 .table--content {
   display: block;
-  width: 100%;
+  width: 110%;
   height: 60px;
   background-color: #ffffff;
   border: solid 1px #d1d5db;
@@ -7064,12 +7069,15 @@ table.files td .css-truncate {
   text-align: left; }
 .table--content__column {
   display: inline-block;
-  width: calc(100%/6 - 1%);
+  width: calc(100%/7 - 1%);
   margin-left: 5px; }
 .table--content__column.rank {
   width: 6%; }
 .table--content__column.user {
   width: 24%; }
+.table--header__column.chat {
+  width: 6%;
+}
 .table--content__column.rating .rating-button {
   line-height: 25px;
   padding: 4px 15px;
@@ -7457,3 +7465,14 @@ table.files td .css-truncate {
     margin: 10px auto; }
   .overlay-div .overlay-div--form-container form .btn :hover {
     color: #fff; } }
+
+  .chatActive {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+.windowMain {
+  position: fixed;
+  bottom: 0px;
+  right: 200px;
+}

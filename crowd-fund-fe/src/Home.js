@@ -4,7 +4,7 @@ import './App.css';
 import './css/style.css';
 import Main from './Main';
 
-let API = 'http://hackathon.koshikraj.com:8888/';
+let API = 'http://localhost:8888/';
 
 class Home extends Component {
 
@@ -85,7 +85,7 @@ class Home extends Component {
                             <div className="vcard-names-container py-3 js-sticky js-user-profile-sticky-fields" style={{position: 'static', top: 0, left: 230, width: 229}}>
                                 <h1 className="vcard-names">
                                     <span className="p-name vcard-fullname d-block overflow-hidden" itemProp="name">Consensus</span>
-                                    <span className="p-nickname vcard-username d-block" itemProp="additionalName">Accenture hackathon</span>
+                                    <span className="p-nickname vcard-username d-block" itemProp="additionalName">DoraHacks hackathon</span>
                                 </h1>
                             </div>
                         </div>
