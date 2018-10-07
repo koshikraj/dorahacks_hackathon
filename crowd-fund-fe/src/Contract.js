@@ -31,7 +31,7 @@ export default class Contract {
     }
 
 
-    crowdFund(repoId, amount=1)
+    crowdFund(repoId, amount=1, callbackHandler)
     {
 
         try {
@@ -41,6 +41,7 @@ export default class Contract {
 
                 contractInstance.crowdFund(repoId, {gas: 1400000, from: user_address, to:contractInstance.address, value:web3.toWei(amount, "ether")}).then(function(c) {
                     console.log(c.toLocaleString());
+                    callbackHandler();
                 });
             });
         }

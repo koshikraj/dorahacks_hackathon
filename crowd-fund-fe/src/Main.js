@@ -90,6 +90,7 @@ class Main extends Component {
         console.log(repoId);
         try {
             var user_address = this.user_address;
+            console.log(user_address);
             var web3 = this.web3;
         this.voting.deployed().then(function(contractInstance) {
 
@@ -103,6 +104,46 @@ class Main extends Component {
         console.log(err);
     }
     }
+
+    bountyStatus(repoId)
+    {
+
+        console.log(repoId);
+        try {
+            var user_address = this.user_address;
+            var web3 = this.web3;
+            this.voting.deployed().then(function(contractInstance) {
+
+                contractInstance.getBountyStatus(repoId, {gas: 1400000, from: user_address}).then(function(c) {
+                    console.log(c.toLocaleString());
+                });
+
+
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    resetBountyStatus(repoId)
+    {
+
+        console.log(repoId);
+        try {
+            var user_address = this.user_address;
+            var web3 = this.web3;
+            this.voting.deployed().then(function(contractInstance) {
+
+                contractInstance.resetBountyStatus(repoId, {gas: 1400000, from: user_address}).then(function(c) {
+                    console.log(c.toLocaleString());
+                });
+
+
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    }
     render() {
         return (
             <div>
@@ -111,7 +152,11 @@ class Main extends Component {
 
                 <button onClick={(e) => this.updateRating("1", "0xba519a5f622658764fd99af6ac5a3759caf7c8c5", 100 )}> update rating </button>
 
-                <button onClick={(e) => this.crowdFund("1")}> Create repo </button>
+                <button onClick={(e) => this.crowdFund("1")}> crowd Fund </button>
+
+                <button onClick={(e) => this.bountyStatus("1")}> Bounty status </button>
+
+                <button onClick={(e) => this.resetBountyStatus("1")}> Reset Bounty status </button>
 
 
     </div>

@@ -32,6 +32,7 @@ class Repo extends Component {
         this.votes = 0;
         this.callbackHandler = this.callbackHandler.bind(this);
         this.callbackBountyStatus = this.callbackBountyStatus.bind(this);
+        this.reloadBountyStatus = this.reloadBountyStatus.bind(this);
 
 
 
@@ -46,14 +47,20 @@ class Repo extends Component {
     }
 
     callbackBountyStatus(status){
-
-        this.setState({chatStatus: status ? chatActive : chatDisabled });
+        console.log(status, "status val");
+        status = status === "true" ? true : false;
+        this.setState({chatStatus: status})
 
 
         console.log('bounty status');
         console.log(status);
 
     }
+
+    reloadBountyStatus(){
+        this.contract.getBountyStatus(this.props.details.id, this.callbackBountyStatus);
+    }
+
 
     componentDidMount() {
         fetch(API + 'files?repo_id=' + this.props.details.id)
@@ -139,19 +146,6 @@ class Repo extends Component {
 
     }
 
-    imageColor() {
-
-        console.log('image');
-        console.log(this.chatStatus);
-        let status = this.chatStatus;
-        if (status === true){
-            return chatActive;
-    }
-    else if(status === false) {
-            return chatDisabled;
-        }
-    }
-
 
     listContributors(){
 
@@ -176,7 +170,16 @@ class Repo extends Component {
             </div>
             <div className="table--content__column avg">{this.state.contributors[fileI].rating / this.state.contributors[fileI].votes}</div>
             <div className="table--content__column earnings">{Number.parseFloat(this.state.amounts[this.state.contributors[fileI].address]).toFixed(2)} ETH</div>
-            <img src={this.state.chatStatus} className="chatActive" onClick={()=> {this.openChat()}} />
+            {this.state.chatStatus ?
+
+                <img src={chatActive} className="chatActive" onClick={() => {
+                    this.openChat()
+                }}/> :
+
+                <img src={chatDisabled} className="chatDisable"/>
+
+            }
+
         </div>;
 
         contributorsList.push(contributor);
@@ -320,7 +323,7 @@ class Repo extends Component {
                                       <button
                                         style={{marginLeft:20,color: '#fff',backgroundColor: '#85a6c1'}}
                                         onClick={() => {
-                                            this.contract.crowdFund(this.props.details.id, this.state.ether);
+                                            this.contract.crowdFund(this.props.details.id, this.state.ether, this.reloadBountyStatus);
                                             close();
                                         }}
                                       >

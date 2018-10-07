@@ -7470,9 +7470,40 @@ table.files td .css-truncate {
   width: 28px;
   height: 28px;
   object-fit: contain;
+    cursor: pointer;
+}
+.chatDisable {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+
 }
 .windowMain {
   position: fixed;
   bottom: 0px;
   right: 200px;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }
